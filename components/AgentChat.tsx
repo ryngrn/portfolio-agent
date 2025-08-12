@@ -1,21 +1,23 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, CSSProperties } from 'react';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
-// Escape HTML so we can safely inject links later
+// --- helpers ---------------------------------------------------------------
+
+const htmlMap: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+};
+
 function escapeHtml(s: string) {
-  const map: Record<string, string> = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-  };
-  return s.replace(/[&<>"']/g, (c) => map[c]);
+  return s.replace(/[&<>"']/g, (c) => htmlMap[c]);
 }
 
-// Convert [label](https://url) markdown to safe <a> links (for the trailing 🔗 icon etc.)
+// Convert [label](https://url) markdown to safe <a> links (for trailing 🔗 etc.)
 function linksToHtml(md: string) {
   const esc = escapeHtml(md);
   return esc.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_m, label, url) =>
@@ -28,10 +30,24 @@ function stripSourcesFooter(s: string) {
   return s.replace(/\n+Sources:\s[\s\S]*$/i, '');
 }
 
-// Remove inline numeric citations like [1], [2] anywhere in the text
+// Remove inline numeric citations like [1], [2]
 function stripInlineCitations(s: string) {
   return s.replace(/\s*\[(\d+)\]/g, '');
 }
+
+function bubble(isUser: boolean): CSSProperties {
+  return {
+    display: 'inline-block',
+    padding: '10px 12px',
+    borderRadius: '14px',
+    background: isUser ? '#e0ecff' : '#f3f4f6',
+    whiteSpace: 'pre-wrap',
+    lineHeight: 1.45,
+    maxWidth: '100%',
+  };
+}
+
+// --- component -------------------------------------------------------------
 
 export default function AgentChat() {
   const [msgs, setMsgs] = useState<Msg[]>([
@@ -40,10 +56,9 @@ export default function AgentChat() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // 🔽 Auto-scroll anchor
+  // Auto-scroll to newest message
   const endRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    // Smoothly scroll the newest message into view whenever msgs change
     endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [msgs]);
 
@@ -70,16 +85,6 @@ export default function AgentChat() {
     }
   }
 
-  const bubble = (isUser: boolean) =>
-    ({
-      display: 'inline-block',
-      padding: '10px 12px',
-      borderRadius: '14px',
-      background: isUser ? '#e0ecff' : '#f3f4f6',
-      whiteSpace: 'pre-wrap',
-      lineHeight: 1.45,
-    } as React.CSSProperties);
-
   return (
     <div style={{ margin: '0 auto', maxWidth: '900px', width: '100%' }}>
       <div style={{ border: '1px solid #e5e7eb', borderRadius: '16px', padding: '12px' }}>
@@ -103,7 +108,6 @@ export default function AgentChat() {
               </div>
             );
           })}
-          {/* 🔽 Auto-scroll target */}
           <div ref={endRef} />
         </div>
 
@@ -124,3 +128,16 @@ export default function AgentChat() {
               background: '#2563eb',
               color: 'white',
               opacity: loading ? 0.6 : 1
+            }}
+          >
+            {loading ? '…' : 'Send'}
+          </button>
+        </div>
+
+        <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '6px' }}>
+          This agent answers from my curated knowledge base. Where available, look for the trailing <strong>🔗</strong> icon for source links.
+        </p>
+      </div>
+    </div>
+  );
+}
