@@ -17,6 +17,7 @@ Ryan has jumped deeply into learning AI tools for building. He's recently hooked
 
 
 
+
 ## What is your favorite soccer team?
 Chelsea FC of the English Premier League is Ryan's favorite team.
 
