@@ -5,9 +5,13 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Allow the /agent page to be embedded in your WordPress site via iframe (edit domain)
+[build.environment]
+  NODE_VERSION = "20"
+  OPENAI_MODEL = "gpt-4o-mini"
+  OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
+
 [[headers]]
   for = "/agent"
   [headers.values]
-    Content-Security-Policy = "frame-ancestors https://www.yourwordpresssite.com https://yourdomain.com;"
+    Content-Security-Policy = "frame-ancestors https://www.ryan.green https://ryan.green;"
     X-Content-Type-Options = "nosniff"
