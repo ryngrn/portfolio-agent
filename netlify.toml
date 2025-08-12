@@ -6,9 +6,13 @@
   package = "@netlify/plugin-nextjs"
 
 [build.environment]
-  NODE_VERSION = "18.17"
+  NODE_VERSION = "18"
   OPENAI_MODEL = "gpt-4o-mini"
   OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
+
+[functions]
+  # 👇 this makes sure the file is inside the function zip at runtime
+  included_files = ["data/embeddings.json"]
 
 [[headers]]
   for = "/agent"
