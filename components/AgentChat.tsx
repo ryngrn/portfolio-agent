@@ -126,7 +126,7 @@ export default function AgentChat() {
       const finalMsgs = [...withWarn, { role: 'assistant', content: reply } as Msg];
       setMsgs(finalMsgs);
 
-      void fetch('/api/audit', {
+      void fetch('/api/audit-feed', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -144,7 +144,7 @@ export default function AgentChat() {
         idx === next.length - 1 ? { ...m, warn: true } : m
       );
       setMsgs([...withWarn, { role: 'assistant', content: fallback }]);
-      void fetch('/api/audit', {
+      void fetch('/api/audit-feed', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
