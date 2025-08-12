@@ -1,0 +1,28 @@
+{
+  "name": "portfolio-agent",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:data": "node scripts/build-embeddings.mjs",
+    "build": "npm run prepare:data && next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "openai": "4.53.0",
+    "gray-matter": "4.0.3",
+    "remark": "15.0.1",
+    "remark-parse": "11.0.0",
+    "unified": "11.0.4",
+    "zod": "3.23.8",
+    "unist-util-visit": "5.0.0"
+  },
+  "devDependencies": {
+    "typescript": "5.5.4",
+    "@types/node": "20.11.30",
+    "@types/gray-matter": "4.0.3"
+  }
+}
