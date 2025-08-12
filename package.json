@@ -8,6 +8,7 @@
     "dev": "next dev",
     "start": "next start"
   },
+ {
   "dependencies": {
     "next": "14.2.5",
     "react": "18.2.0",
@@ -17,8 +18,8 @@
     "remark": "15.0.1",
     "remark-parse": "11.0.0",
     "unified": "11.0.4",
-    "zod": "3.23.8",
-    "unist-util-visit": "5.0.0"
+    "unist-util-visit": "5.0.0",
+    "zod": "3.23.8"
   },
   "devDependencies": {
     "typescript": "5.5.4",
