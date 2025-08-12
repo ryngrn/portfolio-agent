@@ -40,7 +40,7 @@ function bubble(isUser: boolean): CSSProperties {
     display: 'inline-block',
     padding: '10px 12px',
     borderRadius: '14px',
-    background: isUser ? '#e0ecff' : '#f3f4f6',
+    background: isUser ? '#a6efbb' : '#f3f4f6',
     whiteSpace: 'pre-wrap',
     lineHeight: 1.45,
     maxWidth: '100%',
@@ -125,8 +125,11 @@ export default function AgentChat() {
             style={{
               borderRadius: '12px',
               padding: '10px 14px',
-              background: '#2563eb',
+              background: '#219a44',
               color: 'white',
+              fontWeight: 'bold',
+              borderColor: '#219a44',
+              borderWidth: '1',
               opacity: loading ? 0.6 : 1
             }}
           >
@@ -135,7 +138,7 @@ export default function AgentChat() {
         </div>
 
         <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '6px' }}>
-          This agent answers from my curated knowledge base. Where available, look for the trailing <strong>🔗</strong> icon for source links.
+          This agent answers from limited knowledge base. Where available, click <strong>🔗</strong> for source links.
         </p>
       </div>
     </div>
