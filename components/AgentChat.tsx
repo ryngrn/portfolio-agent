@@ -122,7 +122,7 @@ export default function AgentChat() {
         </div>
 
         <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '6px' }}>
-          This agent answers from my curated knowledge base. Where available, look for the trailing <strong>🔗</strong> icon for source links.
+          This agent answers from a limited knowledge base. Where available, look for the <strong>🔗</strong> for source links.
         </p>
       </div>
     </div>
