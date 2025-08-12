@@ -1,4 +1,4 @@
-# Portfolio Agent (Netlify Template)
+# RyanGreenGPT
 
 1) Add your content as Markdown in `/knowledge` (edit the samples).
 2) Set env vars in Netlify: `OPENAI_API_KEY`, optional `OPENAI_MODEL`, `OPENAI_EMBEDDING_MODEL`.
