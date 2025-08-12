@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -39,6 +39,13 @@ export default function AgentChat() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // 🔽 Auto-scroll anchor
+  const endRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    // Smoothly scroll the newest message into view whenever msgs change
+    endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, [msgs]);
 
   async function send() {
     const content = input.trim();
@@ -96,6 +103,8 @@ export default function AgentChat() {
               </div>
             );
           })}
+          {/* 🔽 Auto-scroll target */}
+          <div ref={endRef} />
         </div>
 
         <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
@@ -115,16 +124,3 @@ export default function AgentChat() {
               background: '#2563eb',
               color: 'white',
               opacity: loading ? 0.6 : 1
-            }}
-          >
-            {loading ? '…' : 'Send'}
-          </button>
-        </div>
-
-        <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '6px' }}>
-          This agent answers from a limited knowledge base. Where available, look for the <strong>🔗</strong> for source links.
-        </p>
-      </div>
-    </div>
-  );
-}
