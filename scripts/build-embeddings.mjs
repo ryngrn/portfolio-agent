@@ -72,5 +72,7 @@ async function walk(dir) {
   const withEmbeddings = chunks.length ? await embedAll(chunks) : [];
   fs.mkdirSync('data', { recursive: true });
   fs.writeFileSync('data/embeddings.json', JSON.stringify(withEmbeddings, null, 2));
+  fs.mkdirSync('public', { recursive: true });
+  fs.writeFileSync('public/embeddings.json', JSON.stringify(withEmbeddings, null, 2));
   console.log(`Wrote data/embeddings.json with ${withEmbeddings.length} chunks.`);
 })();
