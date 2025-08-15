@@ -116,6 +116,7 @@ export default function AgentChat() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   // Auto-scroll to newest message
   const endRef = useRef<HTMLDivElement | null>(null);
@@ -218,6 +219,8 @@ export default function AgentChat() {
           })}
           <div ref={endRef} />
         </div>
+
+
 
         <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
           <input
