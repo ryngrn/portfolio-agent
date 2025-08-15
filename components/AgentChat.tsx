@@ -194,7 +194,7 @@ export default function AgentChat() {
 
   return (
     <div style={{ margin: '0 auto', maxWidth: '900px', width: '100%' }}>
-      <div style={{ border: '1px solid #333333', borderRadius: '16px', padding: '12px', backgroundColor: 'rgba(255,255,255,0.5)' }}>
+      <div style={{ border: '1px solid #666666', borderRadius: '16px', padding: '12px', backgroundColor: 'rgba(255,255,255,0.3)' }}>
         <div style={{ height: '420px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {msgs.map((m, i) => {
             const isUser = m.role === 'user';
@@ -242,13 +242,13 @@ export default function AgentChat() {
               opacity: loading ? 0.6 : 1,
             }}
           >
-            {loading ? '…' : 'Send'}
+            {loading ? '…' : 'Ask'}
           </button>
         </div>
 
         <p style={{ 
           fontSize: '12px',
-          color: '#333333',
+          color: '#EEEEEE',
           marginTop: '12px',
           textAlign: 'center' as const,
           marginBottom: '2px', }}>
