@@ -223,11 +223,20 @@ export default function AgentChat() {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') void send();
             }}
             placeholder="Ask about my experience, projects, or approach…"
-            style={{ flex: 1, padding: '10px 12px', borderRadius: '12px', border: '1px solid #d1d5db' }}
+            style={{ 
+              flex: 1, 
+              padding: '10px 12px', 
+              borderRadius: '12px', 
+              border: focused ? '1px solid #3b82f6' : '1px solid #d1d5db',
+              background: focused ? 'white' : 'rgba(255, 255, 255, 0.8)',
+              transition: 'all 0.2s ease',
+            }}
           />
           <button
             onClick={() => void send()}
