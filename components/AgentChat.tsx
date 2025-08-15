@@ -194,7 +194,7 @@ export default function AgentChat() {
 
   return (
     <div style={{ margin: '0 auto', maxWidth: '900px', width: '100%' }}>
-      <div style={{ border: '1px solid #e5e7eb', borderRadius: '16px', padding: '12px' }}>
+      <div style={{ border: '1px solid #e5e7eb', borderRadius: '16px', padding: '12px', backgroundColor: 'rgba(255,255,255,0.5)' }}>
         <div style={{ height: '420px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {msgs.map((m, i) => {
             const isUser = m.role === 'user';
