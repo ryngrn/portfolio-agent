@@ -92,7 +92,8 @@ function bubble(isUser: boolean): CSSProperties {
     whiteSpace: 'pre-wrap',
     lineHeight: 1.45,
     maxWidth: '100%',
-    background: isUser ? '#a6efbb' : '#f3f4f6', // your colors
+    background: isUser ? '#a6efbb' : 'rgba(19,19,19,0.8)',
+    color: isUser ? '#131313' : '#ffffff',
   };
 }
 
