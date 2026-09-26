@@ -1,8 +1,15 @@
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head />
-      <body style={{ margin: 0, fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif', backgroundColor: '#111318'}}>
+      <body className={inter.className} style={{ margin: 0, backgroundColor: '#111318' }}>
         {children}
       </body>
     </html>

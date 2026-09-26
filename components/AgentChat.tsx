@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState, CSSProperties } from 'react';
+import { chatThemes, ChatMode, ChatTheme } from '../config/chatThemes';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -84,16 +85,17 @@ function isConfident(answer: string) {
   return true;
 }
 
-function bubble(isUser: boolean): CSSProperties {
+function bubble(isUser: boolean, theme: ChatTheme): CSSProperties {
   return {
     display: 'inline-block',
-    padding: '10px 12px',
-    borderRadius: '14px',
+    padding: '11px 14px',
+    borderRadius: '18px',
     whiteSpace: 'pre-wrap',
-    lineHeight: 1.45,
+    lineHeight: 1.5,
+    letterSpacing: '-0.01em',
     maxWidth: '100%',
-    background: isUser ? '#a6efbb' : 'rgba(19,19,19,0.8)',
-    color: isUser ? '#131313' : '#ffffff',
+    background: isUser ? theme.userBubbleBackground : theme.assistantBubbleBackground,
+    color: isUser ? theme.userBubbleText : theme.assistantBubbleText,
   };
 }
 
@@ -110,7 +112,8 @@ function addAskedQuestion(q: string) {
 
 // --- component -------------------------------------------------------------
 
-export default function AgentChat() {
+export default function AgentChat({ mode = 'dark' }: { mode?: ChatMode }) {
+  const theme = chatThemes[mode];
   const [msgs, setMsgs] = useState<Msg[]>([
     { role: 'assistant', content: 'Hi! I can answer questions about my experience, PM approach, design background, and projects.' },
   ]);
@@ -195,15 +198,25 @@ export default function AgentChat() {
   }
 
   return (
-    <div style={{ margin: '0 auto', maxWidth: '900px', width: '100%' }}>
-      <div style={{ border: '1px solid #666666', borderRadius: '16px', padding: '12px', backgroundColor: 'rgba(255,255,255,0.2)' }}>
-        <div style={{ height: '80dvh', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    <div style={{ margin: '0 auto', maxWidth: '900px', width: '100%', padding: '16px', boxSizing: 'border-box' }}>
+      <div
+        style={{
+          border: `1px solid ${theme.panelBorder}`,
+          borderRadius: '24px',
+          padding: '16px',
+          backgroundColor: theme.panelBackground,
+          boxShadow: theme.panelShadow,
+          backdropFilter: 'blur(18px)',
+          WebkitBackdropFilter: 'blur(18px)',
+        }}
+      >
+        <div style={{ height: '80dvh', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px', padding: '2px' }}>
           {msgs.map((m, i) => {
             const isUser = m.role === 'user';
             if (isUser) {
               return (
                 <div key={i} style={{ textAlign: 'right' }}>
-                  <div style={bubble(true)}>{m.content}</div>
+                  <div style={bubble(true, theme)}>{m.content}</div>
                 </div>
               );
             }
@@ -213,7 +226,11 @@ export default function AgentChat() {
             const html = linksToHtml(cleaned);
             return (
               <div key={i} style={{ textAlign: 'left' }}>
-                <div style={bubble(false)} dangerouslySetInnerHTML={{ __html: html }} />
+                <div
+                  className="assistant-message"
+                  style={bubble(false, theme)}
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
               </div>
             );
           })}
@@ -222,7 +239,7 @@ export default function AgentChat() {
 
 
 
-        <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
+        <div style={{ position: 'relative', width: '100%', marginTop: '14px' }}>
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -234,26 +251,45 @@ export default function AgentChat() {
             placeholder="Ask about my experience, projects, or approach…"
             style={{ 
               flex: 1, 
-              padding: '10px 12px', 
-              borderRadius: '12px', 
-              border: focused ? '1px solid #3b82f6' : '1px solid #d1d5db',
-              background: focused ? 'white' : 'rgba(255, 255, 255, 0.8)',
-              transition: 'all 0.2s ease',
+              width: '100%',
+              boxSizing: 'border-box',
+              minWidth: 0,
+              minHeight: '48px',
+              padding: '0 90px 0 18px',
+              borderRadius: '999px',
+              border: `1px solid ${focused ? theme.inputBorderFocused : theme.inputBorder}`,
+              background: focused ? theme.inputBackgroundFocused : theme.inputBackground,
+              color: theme.inputText,
+              font: 'inherit',
+              fontSize: '15px',
+              outline: 'none',
+              boxShadow: focused ? `0 0 0 3px ${theme.inputBorderFocused}20` : '0 1px 2px rgba(15, 23, 42, 0.04)',
+              transition: 'border-color 160ms ease, box-shadow 160ms ease, background 160ms ease',
             }}
           />
           <button
             onClick={() => void send()}
             disabled={loading}
             style={{
-              borderRadius: '12px',
+              position: 'absolute',
+              top: '4px',
+              right: '4px',
+              minHeight: '40px',
+              borderRadius: '999px',
               borderStyle: 'solid',
-              padding: '10px 14px',
-              background: '#219a44',
-              color: 'white',
+              padding: '0 18px',
+              background: theme.buttonBackground,
+              color: theme.buttonText,
               fontWeight: 'bold',
-              borderColor: '#219a44',
+              borderColor: theme.buttonBackground,
               borderWidth: 1,
               opacity: loading ? 0.6 : 1,
+              cursor: loading ? 'default' : 'pointer',
+              font: 'inherit',
+              fontSize: '15px',
+              letterSpacing: '-0.01em',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
+              transition: 'opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease',
             }}
           >
             {loading ? '…' : 'Ask'}
@@ -262,12 +298,21 @@ export default function AgentChat() {
 
         <p style={{ 
           fontSize: '12px',
-          color: '#EEEEEE',
+          color: theme.helperText,
           marginTop: '12px',
           textAlign: 'center' as const,
           marginBottom: '2px', }}>
-          This agent answers from limited knowledge base. Where available, click <strong>🔗</strong> for source links.
+          This agent answers from a limited knowledge base.
         </p>
+        <style jsx>{`
+          input::placeholder {
+            color: ${theme.inputPlaceholder};
+          }
+
+          .assistant-message :global(a) {
+            color: ${theme.linkText};
+          }
+        `}</style>
       </div>
     </div>
   );
