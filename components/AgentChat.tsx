@@ -201,6 +201,10 @@ export default function AgentChat({ mode = 'dark' }: { mode?: ChatMode }) {
     <div style={{ margin: '0 auto', maxWidth: '900px', width: '100%', padding: '16px', boxSizing: 'border-box' }}>
       <div
         style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'clamp(320px, calc(100dvh - 32px), 680px)',
+          boxSizing: 'border-box',
           border: `1px solid ${theme.panelBorder}`,
           borderRadius: '24px',
           padding: '16px',
@@ -210,7 +214,7 @@ export default function AgentChat({ mode = 'dark' }: { mode?: ChatMode }) {
           WebkitBackdropFilter: 'blur(18px)',
         }}
       >
-        <div style={{ height: '80dvh', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px', padding: '2px' }}>
+        <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px', padding: '2px' }}>
           {msgs.map((m, i) => {
             const isUser = m.role === 'user';
             if (isUser) {
