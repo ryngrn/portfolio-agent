@@ -300,14 +300,6 @@ export default function AgentChat({ mode = 'dark' }: { mode?: ChatMode }) {
           </button>
         </div>
 
-        <p style={{ 
-          fontSize: '12px',
-          color: theme.helperText,
-          marginTop: '12px',
-          textAlign: 'center' as const,
-          marginBottom: '2px', }}>
-          This agent answers from a limited knowledge base.
-        </p>
         <style jsx>{`
           input::placeholder {
             color: ${theme.inputPlaceholder};

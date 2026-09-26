@@ -17,7 +17,6 @@ export type ChatTheme = {
   inputPlaceholder: string;
   buttonBackground: string;
   buttonText: string;
-  helperText: string;
   linkText: string;
 };
 
@@ -39,7 +38,6 @@ export const chatThemes: Record<ChatMode, ChatTheme> = {
     inputPlaceholder: '#6b7280',
     buttonBackground: '#219a44',
     buttonText: '#ffffff',
-    helperText: '#eeeeee',
     linkText: '#a6efbb',
   },
   light: {
@@ -59,7 +57,6 @@ export const chatThemes: Record<ChatMode, ChatTheme> = {
     inputPlaceholder: '#64748b',
     buttonBackground: '#187a36',
     buttonText: '#ffffff',
-    helperText: '#475569',
     linkText: '#166534',
   },
 };
