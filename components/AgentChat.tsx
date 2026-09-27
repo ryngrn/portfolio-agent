@@ -272,31 +272,38 @@ export default function AgentChat({ mode = 'dark' }: { mode?: ChatMode }) {
             }}
           />
           <button
+            className="submit-button"
             onClick={() => void send()}
             disabled={loading}
+            aria-label={loading ? 'Sending question' : 'Send question'}
+            title="Send question"
             style={{
               position: 'absolute',
               top: '4px',
               right: '4px',
+              width: '40px',
+              height: '40px',
               minHeight: '40px',
-              borderRadius: '999px',
+              borderRadius: '50%',
               borderStyle: 'solid',
-              padding: '0 18px',
-              background: theme.buttonBackground,
+              padding: 0,
               color: theme.buttonText,
               fontWeight: 'bold',
               borderColor: theme.buttonBackground,
               borderWidth: 1,
               opacity: loading ? 0.6 : 1,
               cursor: loading ? 'default' : 'pointer',
-              font: 'inherit',
-              fontSize: '15px',
-              letterSpacing: '-0.01em',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
-              transition: 'opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease',
+              display: 'grid',
+              placeItems: 'center',
             }}
           >
-            {loading ? '…' : 'Ask'}
+            {loading ? (
+              <span aria-hidden="true">…</span>
+            ) : (
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M9 14V4M9 4L4.75 8.25M9 4l4.25 4.25" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
           </button>
         </div>
 
@@ -307,6 +314,29 @@ export default function AgentChat({ mode = 'dark' }: { mode?: ChatMode }) {
 
           .assistant-message :global(a) {
             color: ${theme.linkText};
+          }
+
+          .submit-button {
+            background: ${theme.buttonBackground};
+            box-shadow: 0 3px 9px rgba(0, 0, 0, 0.16);
+            transform: translateY(0) scale(1);
+            transition: background 180ms ease, box-shadow 180ms ease, transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 160ms ease;
+          }
+
+          .submit-button:not(:disabled):hover {
+            background: ${theme.buttonGradient};
+            box-shadow: 0 9px 18px rgba(0, 0, 0, 0.24);
+            transform: translateY(-3px) scale(1.05);
+          }
+
+          .submit-button:not(:disabled):active {
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+            transform: translateY(0) scale(0.98);
+          }
+
+          .submit-button:focus-visible {
+            outline: 3px solid ${theme.inputBorderFocused};
+            outline-offset: 2px;
           }
         `}</style>
       </div>

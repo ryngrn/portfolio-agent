@@ -16,6 +16,7 @@ export type ChatTheme = {
   inputText: string;
   inputPlaceholder: string;
   buttonBackground: string;
+  buttonGradient: string;
   buttonText: string;
   linkText: string;
 };
@@ -37,6 +38,7 @@ export const chatThemes: Record<ChatMode, ChatTheme> = {
     inputText: '#131313',
     inputPlaceholder: '#6b7280',
     buttonBackground: '#219a44',
+    buttonGradient: 'linear-gradient(145deg, #238242 0%, #126531 100%)',
     buttonText: '#ffffff',
     linkText: '#a6efbb',
   },
@@ -56,6 +58,7 @@ export const chatThemes: Record<ChatMode, ChatTheme> = {
     inputText: '#111827',
     inputPlaceholder: '#64748b',
     buttonBackground: '#187a36',
+    buttonGradient: 'linear-gradient(145deg, #237b40 0%, #105c2a 100%)',
     buttonText: '#ffffff',
     linkText: '#166534',
   },

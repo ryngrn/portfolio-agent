@@ -1,0 +1,30 @@
+name: Portfolio Agent
+main_branch: main
+
+setup: npm ci
+
+checks:
+  - npm exec next build
+
+browser:
+  enabled: false
+
+review:
+  requirements:
+    - preserve the embedded agent experience and responsive chat layout
+    - do not expose API keys, private prompts, or sensitive audit data
+    - keep agent and audit API routes server-side and failure-safe
+    - preserve the production iframe security headers
+    - introduce no obvious TypeScript, build, or security regressions
+
+manual_approval:
+  paths:
+    - netlify.toml
+    - .env*
+    - app/api/**
+    - scripts/build-embeddings.mjs
+  conditions:
+    - infrastructure_change
+    - secret_change
+    - external_api_change
+    - generated_embedding_change
