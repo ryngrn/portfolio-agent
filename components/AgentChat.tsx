@@ -297,13 +297,15 @@ export default function AgentChat({ mode = 'dark' }: { mode?: ChatMode }) {
               placeItems: 'center',
             }}
           >
-            {loading ? (
-              <span aria-hidden="true">…</span>
-            ) : (
-              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M9 14V4M9 4L4.75 8.25M9 4l4.25 4.25" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
+            <span className="submit-icon" aria-hidden="true">
+              {loading ? (
+                '…'
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M9 14V4M9 4L4.75 8.25M9 4l4.25 4.25" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
+            </span>
           </button>
         </div>
 
@@ -319,14 +321,37 @@ export default function AgentChat({ mode = 'dark' }: { mode?: ChatMode }) {
           .submit-button {
             background: ${theme.buttonBackground};
             box-shadow: 0 3px 9px rgba(0, 0, 0, 0.16);
+            isolation: isolate;
+            overflow: hidden;
             transform: translateY(0) scale(1);
-            transition: background 180ms ease, box-shadow 180ms ease, transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 160ms ease;
+            transition: box-shadow 180ms ease, transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 160ms ease;
+          }
+
+          .submit-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: inherit;
+            background: ${theme.buttonGradient};
+            opacity: 0;
+            transition: opacity 180ms ease;
+          }
+
+          .submit-icon {
+            display: grid;
+            place-items: center;
+            position: relative;
+            z-index: 1;
+          }
+
+          .submit-button:not(:disabled):hover::before {
+            opacity: 1;
           }
 
           .submit-button:not(:disabled):hover {
-            background: ${theme.buttonGradient};
             box-shadow: 0 9px 18px rgba(0, 0, 0, 0.24);
-            transform: translateY(-3px) scale(1.05);
+            transform: translateY(0) scale(1);
           }
 
           .submit-button:not(:disabled):active {
